@@ -11,7 +11,6 @@ void main() {
   var container = DiContainer().withDefaultDependencies();
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.edgeToEdge,
   );
