@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart' as Http;
 import 'package:dio/dio.dart' as dio;
+import 'package:get/get.dart';
+import 'package:getx_mvvm_boilerplate/application/env.dart';
 import 'package:getx_mvvm_boilerplate/commons/data/mock_data_loader.dart';
+import 'package:getx_mvvm_boilerplate/data/preferences/user_preference.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
-import '../../../application/env.dart';
-import '../../../di/container.dart';
-import '../../preferences/user_preference.dart';
 import '../../services/base_service/base_service_failure.dart';
 import 'package:getx_mvvm_boilerplate/commons/utils/list_utils.dart';
 
@@ -15,9 +15,9 @@ class BaseService {
   String? baseUrl;
   final String serverType;
   final bool usingMockData;
-  final UserPreference userPreference = inject<UserPreference>();
-  final Http.Dio _dio = inject<Http.Dio>();
-  final MockDataLoader _mockDataLoader = MockDataLoader();
+  final UserPreference userPreference = Get.find<UserPreference>();
+  final Http.Dio _dio = Get.find<Http.Dio>();
+  final MockDataLoader _mockDataLoader = Get.find<MockDataLoader>();
   final Options defaultOptions = Options(
     sendTimeout: const Duration(minutes: 1),
     receiveTimeout: const Duration(minutes: 1),

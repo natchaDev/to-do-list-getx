@@ -1,9 +1,9 @@
 import 'dart:developer' as developer;
 
+import 'package:get/get.dart';
 import 'package:getx_mvvm_boilerplate/commons/utils/string_utils.dart';
 
 import '../application/env.dart';
-import '../di/container.dart';
 
 class AppLog {
   static const LOG_LEVEL_OFF = 0;
@@ -14,7 +14,7 @@ class AppLog {
   static const LOG_LEVEL_E = 5;
   static final enable = false;
 
-  static EnvironmentConfig _env() => inject<EnvironmentConfig>();
+  static EnvironmentConfig _env() => Get.find<EnvironmentConfig>();
 
   static int get _level => _env().logLevel;
 

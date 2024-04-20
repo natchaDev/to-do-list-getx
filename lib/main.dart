@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:getx_mvvm_boilerplate/di/config.dart';
+import 'package:get/get.dart';
 import 'package:getx_mvvm_boilerplate/ui/main_application.dart';
 
 import 'application/env.dart';
-import 'di/container.dart';
 
 void main() {
-  var env = DevApiEnvironment();
-  var container = DiContainer().withDefaultDependencies();
+  DevLocalEnvironment env = Get.put(DevLocalEnvironment());
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setEnabledSystemUIMode(
@@ -16,6 +14,5 @@ void main() {
   );
   runApp(MainApplication(
     env: env,
-    container: container,
   ));
 }

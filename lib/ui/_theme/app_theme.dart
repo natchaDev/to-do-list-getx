@@ -7,22 +7,14 @@ import 'color_theme/color_theme_light.dart';
 class AppTheme {
   static final light = ThemeData.light().copyWith(
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.blue,
-      iconTheme: IconThemeData(color: Colors.green),
-    ),
-    buttonTheme: const ButtonThemeData(
-      buttonColor: Colors.cyan,
-      textTheme: ButtonTextTheme.primary,
+      backgroundColor: ThemeData().background(),
+      iconTheme: IconThemeData(color: ThemeData().icon()),
     ),
   );
   static final dark = ThemeData.dark().copyWith(
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.red,
-      iconTheme: IconThemeData(color: Colors.yellow),
-    ),
-    buttonTheme: const ButtonThemeData(
-      buttonColor: Colors.deepPurple,
-      textTheme: ButtonTextTheme.primary,
+      backgroundColor: ThemeData().background(),
+      iconTheme: IconThemeData(color: ThemeData().icon()),
     ),
   );
 }
@@ -34,9 +26,63 @@ extension AppThemeExt on ThemeData {
         : ColorThemeLight().primaryColor;
   }
 
+  Color secondary() {
+    return Get.isDarkMode
+        ? ColorThemeDark().secondaryColor
+        : ColorThemeLight().secondaryColor;
+  }
+
+  Color accent() {
+    return Get.isDarkMode
+        ? ColorThemeDark().accentColor
+        : ColorThemeLight().accentColor;
+  }
+
   Color primaryText() {
     return Get.isDarkMode
         ? ColorThemeDark().primaryTextColor
         : ColorThemeLight().primaryTextColor;
+  }
+
+  Color secondaryText() {
+    return Get.isDarkMode
+        ? ColorThemeDark().secondaryTextColor
+        : ColorThemeLight().secondaryTextColor;
+  }
+
+  Color scaffoldBackground() {
+    return Get.isDarkMode
+        ? ColorThemeDark().scaffoldBackgroundColor
+        : ColorThemeLight().scaffoldBackgroundColor;
+  }
+
+  Color background() {
+    return Get.isDarkMode
+        ? ColorThemeDark().backgroundColor
+        : ColorThemeLight().backgroundColor;
+  }
+
+  Color background2() {
+    return Get.isDarkMode
+        ? ColorThemeDark().background2Color
+        : ColorThemeLight().background2Color;
+  }
+
+  Color icon() {
+    return Get.isDarkMode
+        ? ColorThemeDark().iconColor
+        : ColorThemeLight().iconColor;
+  }
+
+  Color border() {
+    return Get.isDarkMode
+        ? ColorThemeDark().borderColor
+        : ColorThemeLight().borderColor;
+  }
+
+  Color alert() {
+    return Get.isDarkMode
+        ? ColorThemeDark().alertColor
+        : ColorThemeLight().alertColor;
   }
 }

@@ -1,28 +1,21 @@
-
 import 'package:get/get.dart';
 import 'package:getx_mvvm_boilerplate/commons/enum.dart';
 
-
 abstract class BaseController extends GetxController {
 
-  //Controls page state
-  final Rx<PageState> _pageSateController = PageState.DEFAULT.obs;
+  final Rx<PageState> pageState = PageState.DEFAULT.obs;
 
-  PageState get pageState => _pageSateController.value;
+  final Rx<String> message= ''.obs;
 
-  updatePageState(PageState state) => _pageSateController(state);
+  updatePageState(PageState state) => pageState(state);
 
-  resetPageState() => _pageSateController(PageState.DEFAULT);
+  resetPageState() => pageState(PageState.DEFAULT);
 
   showLoading() => updatePageState(PageState.LOADING);
 
   hideLoading() => resetPageState();
 
-  final _messageController = ''.obs;
-
-  String get message => _messageController.value;
-
-  showMessage(String msg) => _messageController(msg);
+  showMessage(String msg) => message(msg);
 
   final _errorMessageController = ''.obs;
 
@@ -34,14 +27,14 @@ abstract class BaseController extends GetxController {
 
   final _successMessageController = ''.obs;
 
-  String get successMessage => _messageController.value;
+  String get successMessage => message.value;
 
   showSuccessMessage(String msg) => _successMessageController(msg);
 
   @override
   void onClose() {
-    _messageController.close();
-    _pageSateController.close();
+    message.close();
+    pageState.close();
     super.onClose();
   }
 }
