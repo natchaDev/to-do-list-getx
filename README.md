@@ -1,6 +1,6 @@
 # getx_mvvm_boilerplate
 
-GetX MVVM boilerplate
+Flutter GetX MVVM boilerplate
 
 ## Getting Started
 
