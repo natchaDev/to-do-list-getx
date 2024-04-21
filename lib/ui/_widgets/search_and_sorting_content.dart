@@ -3,6 +3,7 @@ import 'package:get/get.dart' hide GetDynamicUtils;
 import 'package:getx_mvvm_boilerplate/commons/constants/constant.dart';
 import 'package:getx_mvvm_boilerplate/assets/i18n/i18n_constant.dart';
 import 'package:getx_mvvm_boilerplate/commons/constants/ui_constant.dart';
+import 'package:getx_mvvm_boilerplate/models/rx_nullable.dart';
 import 'package:getx_mvvm_boilerplate/ui/_style/text_styles.dart';
 import 'package:getx_mvvm_boilerplate/ui/_theme/app_theme.dart';
 import 'package:getx_mvvm_boilerplate/commons/utils/list_utils.dart';
@@ -11,7 +12,7 @@ class SearchAndSortingContent extends StatefulWidget {
   final TextEditingController textEditingController;
   final Function(String text) onSubmitted;
   final Function(String text) onChanged;
-  final Function(String sort)? onSorted;
+  final Function(String sort, bool isAscending)? onSorted;
   final List<String>? sortLists;
 
   const SearchAndSortingContent({
@@ -29,12 +30,16 @@ class SearchAndSortingContent extends StatefulWidget {
 }
 
 class _SearchAndSortingContentState extends State<SearchAndSortingContent> {
+  final RxBool _isAscending = true.obs;
+  final Rx<String?> _selectedSort = RxNullable<String?>().setNull();
   final _layerLink = LayerLink();
   OverlayEntry? _entry;
 
   @override
   void dispose() {
     _hideOverlay();
+    _selectedSort.close();
+    _isAscending.close();
     super.dispose();
   }
 
@@ -43,10 +48,9 @@ class _SearchAndSortingContentState extends State<SearchAndSortingContent> {
     return height * (widget.sortLists?.length ?? 1);
   }
 
-  void _showOverlay() {
+  _showOverlay() {
     _hideOverlay();
     final overlay = Overlay.of(context);
-
     _entry = OverlayEntry(
       builder: (BuildContext context) => Stack(
         children: [
@@ -82,13 +86,23 @@ class _SearchAndSortingContentState extends State<SearchAndSortingContent> {
     overlay.insert(_entry!);
   }
 
-  void _hideOverlay() {
+  _hideOverlay() {
     _entry?.remove();
     _entry = null;
   }
 
+  IconData _getIcons(String title, String? selectedSort, bool isAscending) {
+    if (title == selectedSort) {
+      return isAscending ? Icons.arrow_upward : Icons.arrow_downward;
+    } else {
+      return Icons.arrow_upward;
+    }
+  }
+
   Widget _selectSort(
     String title, {
+    required String? selectedSort,
+    required bool isAscending,
     required Function onTap,
     bool isLast = false,
   }) {
@@ -102,9 +116,15 @@ class _SearchAndSortingContentState extends State<SearchAndSortingContent> {
             padding: EdgeInsets.all(Dimen.xxxSmall),
             child: Row(
               children: [
-                Text(
-                  title,
-                  style: context.textMediumNormal,
+                Expanded(
+                  child: Text(
+                    title,
+                    style: context.textMediumNormal.copyWith(
+                      color: selectedSort == title
+                          ? ThemeData().primary()
+                          : ThemeData().primaryText(),
+                    ),
+                  ),
                 ),
                 Visibility(
                   visible: title == SortType.none,
@@ -113,6 +133,14 @@ class _SearchAndSortingContentState extends State<SearchAndSortingContent> {
                     style: context.textMediumNormal.copyWith(
                       color: ThemeData().secondaryText(),
                     ),
+                  ),
+                ),
+                Visibility(
+                  visible: title != SortType.none,
+                  child: Icon(
+                    _getIcons(title, selectedSort, isAscending),
+                    color: ThemeData().icon(),
+                    size: IconSize.small,
                   ),
                 ),
               ],
@@ -135,23 +163,36 @@ class _SearchAndSortingContentState extends State<SearchAndSortingContent> {
       color: ThemeData().background2(),
       child: Padding(
         padding: EdgeInsets.all(Dimen.small),
-        child: ListView.builder(
-          padding: EdgeInsets.zero,
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: sortingLists.length,
-          itemBuilder: (BuildContext context, int index) {
-            return _selectSort(
-              sortingLists[index],
-              onTap: () {
-                if (widget.onSorted == null) return;
-                widget.onSorted?.call(sortingLists[index]);
-                _hideOverlay();
-              },
-              isLast: index == sortingLists.length - 1,
-            );
-          },
-        ),
+        child: Obx(() {
+          String? selectedSort = _selectedSort.value;
+          bool isAscending = _isAscending.value;
+          return ListView.builder(
+            padding: EdgeInsets.zero,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: sortingLists.length,
+            itemBuilder: (BuildContext context, int index) {
+              String item = sortingLists[index];
+              return _selectSort(
+                item,
+                selectedSort: selectedSort,
+                isAscending: isAscending,
+                onTap: () {
+                  if (widget.onSorted == null) return;
+                  if (_selectedSort.value == item && item != SortType.none) {
+                    _isAscending.toggle();
+                  } else {
+                    _isAscending.value = true;
+                  }
+                  _selectedSort.value = item;
+                  widget.onSorted?.call(item, _isAscending.value);
+                  _hideOverlay();
+                },
+                isLast: index == sortingLists.length - 1,
+              );
+            },
+          );
+        }),
       ),
     );
   }

@@ -137,18 +137,29 @@ void main() {
 
     group('Sort', () {
       mock.shuffle();
-      test('Sort by title', () {
+      test('Ascending by title', () {
         List<String> expectResults = [
           'item 1',
           'item 2',
           'item 3',
         ];
-        homeVM.onSorted(SortType.title);
+        homeVM.onSorted(SortType.title, isAscending: true);
         expect(expectResults,
             homeVM.todoDetailList.map((item) => item.title).toList());
       });
 
-      test('Sort by date', () {
+      test('Descending by title', () {
+        List<String> expectResults = [
+          'item 3',
+          'item 2',
+          'item 1',
+        ];
+        homeVM.onSorted(SortType.title, isAscending: false);
+        expect(expectResults,
+            homeVM.todoDetailList.map((item) => item.title).toList());
+      });
+
+      test('Ascending by date', () {
         List<String> expectResults = [
           '1',
           '2',
@@ -159,13 +170,35 @@ void main() {
             homeVM.todoDetailList.map((item) => item.id).toList());
       });
 
-      test('Sort by status', () {
+      test('Descending by date', () {
         List<String> expectResults = [
+          '3',
           '2',
           '1',
-          '3',
         ];
-        homeVM.onSorted(SortType.status);
+        homeVM.onSorted(SortType.date, isAscending: false);
+        expect(expectResults,
+            homeVM.todoDetailList.map((item) => item.id).toList());
+      });
+
+      test('Ascending by status', () {
+        List<String> expectResults = [
+          '2',
+          '3',
+          '1',
+        ];
+        homeVM.onSorted(SortType.status, isAscending: true);
+        var results = homeVM.todoDetailList.map((item) => item.id).toList();
+        expect(expectResults, results);
+      });
+
+      test('Descending by status', () {
+        List<String> expectResults = [
+          '1',
+          '3',
+          '2',
+        ];
+        homeVM.onSorted(SortType.status, isAscending: false);
         var results = homeVM.todoDetailList.map((item) => item.id).toList();
         expect(expectResults, results);
       });

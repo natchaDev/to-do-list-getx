@@ -22,4 +22,5 @@ final Map<String, String> en = {
   '_please_enter_a_maximum_of_100_characters': 'Please enter a maximum of 100 characters.',
   '_date': 'Date',
   '_id': 'ID',
+  '_empty': 'Empty',
 };

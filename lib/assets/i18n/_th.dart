@@ -22,4 +22,5 @@ final Map<String, String> th = {
   '_please_enter_a_maximum_of_100_characters': 'กรุณากรอกไม่เกิน 100 ตัวอักษร',
   '_date': 'วันที่',
   '_id': 'รหัส',
+  '_empty': 'ไม่มีข้อมูล',
 };

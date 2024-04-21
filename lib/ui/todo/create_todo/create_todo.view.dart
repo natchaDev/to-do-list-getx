@@ -81,12 +81,12 @@ class CreateTodoView extends BaseView<CreateTodoVM> with Validators {
   }
 
   Widget _content(BuildContext context) {
-    return baseContent(
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: baseContent(
         child: Form(
           key: _formKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppTextFormField(
@@ -114,13 +114,13 @@ class CreateTodoView extends BaseView<CreateTodoVM> with Validators {
                 },
               ),
               VSpacings.small,
-              _imageContent(context),
-              VSpacings.small,
               _statusContent(context),
+              VSpacings.small,
+              _imageContent(context),
               VSpacings.small,
               AppTextFormField(
                 _descriptionController,
-                maxLine: 3,
+                maxLine: 1,
                 title: i18n.description,
               ),
               VSpacings.small,

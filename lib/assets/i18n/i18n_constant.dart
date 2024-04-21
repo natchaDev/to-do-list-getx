@@ -22,6 +22,7 @@ class I18NConst {
   final String pleaseEnterAMaximumOf100Characters = '_please_enter_a_maximum_of_100_characters';
   final String date = '_date';
   final String id = '_id';
+  final String empty = '_empty';
 }
 
 var i18n = I18NConst();

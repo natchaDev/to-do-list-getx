@@ -76,10 +76,14 @@ class TodoItemList extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: Dimen.xxSmall),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('${title.tr}:', style: context.textSmallBold),
           HSpacings.small,
-          Text(content ?? '-', style: context.textSmall),
+          Flexible(
+            child: Text(content ?? '-', style: context.textSmall),
+          ),
         ],
       ),
     );
