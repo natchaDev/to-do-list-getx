@@ -139,9 +139,6 @@ class _SearchAndSortingContentState extends State<SearchAndSortingContent> {
                   visible: title != SortType.none,
                   child: Icon(
                     _getIcons(title, selectedSort, isAscending),
-                    // isAscending && (title == selectedSort)
-                    //     ? Icons.arrow_upward
-                    //     : Icons.arrow_downward,
                     color: ThemeData().icon(),
                     size: IconSize.small,
                   ),
