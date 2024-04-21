@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "510804899756",
+    "project_id": "to-do-list-getx",
+    "storage_bucket": "to-do-list-getx.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510804899756:android:1fbfbc0b78d10b51126c09",
+        "android_client_info": {
+          "package_name": "com.example.getx_mvvm_boilerplate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBShCuCZ8rhLXyVqAPyh9Ra36AMtIOe3Ks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
