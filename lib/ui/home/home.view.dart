@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_mvvm_boilerplate/application/base/base_view.dart';
@@ -45,27 +47,26 @@ class HomeView extends BaseView<HomeVM> {
   }
 
   Widget _content(BuildContext context) {
-    return baseContent(
-      child: Center(
-        child: Column(
-          children: [
-            SearchAndSortingContent(
-              textEditingController: _searchController,
-              onSubmitted: controller.onSearchSubmitted,
-              onChanged: controller.onSearchChanged,
-              onSorted: controller.onSorted,
-              sortLists: const [
-                SortType.title,
-                SortType.date,
-                SortType.status,
-              ],
-            ),
-            Expanded(
-              child: _listViewContent(),
-            ),
+    return Column(
+      children: [
+        SearchAndSortingContent(
+          textEditingController: _searchController,
+          onSubmitted: controller.onSearchSubmitted,
+          onChanged: controller.onSearchChanged,
+          onSorted: (String type, bool isAscending) {
+            controller.onSorted(type, isAscending: isAscending);
+          },
+          sortLists: const [
+            SortType.none,
+            SortType.title,
+            SortType.date,
+            SortType.status,
           ],
         ),
-      ),
+        Expanded(
+          child: baseContent(child: _listViewContent()),
+        ),
+      ],
     );
   }
 

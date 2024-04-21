@@ -20,6 +20,8 @@ class HomeVM extends BaseController {
     delay: const Duration(milliseconds: 1500),
   );
   List<TodoDetail> _todoDetailList = [];
+  bool _isAscending = true;
+  String _sortType = SortType.none;
 
   @override
   void onInit() {
@@ -27,12 +29,13 @@ class HomeVM extends BaseController {
     super.onInit();
   }
 
-  _loadTodoDetail(){
+  _loadTodoDetail() {
     pageState.value = PageState.LOADING;
     _todoRepository.getTodoDetailList().then((List<TodoDetail> list) {
       pageState.value = PageState.DEFAULT;
-      _todoDetailList = list;
+      _todoDetailList = list.toList();
       todoDetailList.value = list;
+      _sort(_sortType, _isAscending);
     }).catchError((e) {
       pageState.value = PageState.DEFAULT;
       showErrorMessage(e);
@@ -89,13 +92,28 @@ class HomeVM extends BaseController {
     }).toList();
   }
 
-  onSorted(String type) {
+  onSorted(String type, {bool isAscending = true}) {
     pageState.value = PageState.LOADING;
-    todoDetailList.sort((f, s) => _sort(type, f, s));
+    _sortType = type;
+    _isAscending = isAscending;
+    _sort(type, isAscending);
     pageState.value = PageState.DEFAULT;
   }
 
-  int _sort(String type, TodoDetail f, TodoDetail s) {
+  _sort(String type, bool isAscending) {
+    if (type == SortType.none) {
+      todoDetailList.value = _todoDetailList.toList();
+      pageState.value = PageState.DEFAULT;
+      return;
+    }
+    if (isAscending) {
+      todoDetailList.sort((f, s) => _comparator(type, f, s));
+    } else {
+      todoDetailList.sort((s, f) => _comparator(type, f, s));
+    }
+  }
+
+  int _comparator(String type, TodoDetail f, TodoDetail s) {
     switch (type) {
       case SortType.title:
         return TodoDetail.titleComparator(f, s);

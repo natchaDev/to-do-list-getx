@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:getx_mvvm_boilerplate/commons/constants/ui_constant.dart';
 import 'package:getx_mvvm_boilerplate/commons/validator.dart';
 import 'package:getx_mvvm_boilerplate/ui/_style/text_styles.dart';
 import 'package:get/get.dart';
 import 'package:getx_mvvm_boilerplate/ui/_theme/app_theme.dart';
+import 'package:getx_mvvm_boilerplate/ui/_widgets/app_card.dart';
 
 class AppTextFormField extends StatelessWidget with Validators {
   final TextEditingController controller;
@@ -26,12 +28,14 @@ class AppTextFormField extends StatelessWidget with Validators {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _titleContent(context),
-        TextFormField(
-          key: const Key('app_text_form_field'),
-          controller: controller,
-          maxLines: maxLine,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: Validators.compose(validatorList ?? []),
+        VSpacings.xxSmall,
+        AppCard(
+          child: TextFormField(
+            controller: controller,
+            maxLines: maxLine,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: Validators.compose(validatorList ?? []),
+          ),
         ),
       ],
     );

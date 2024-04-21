@@ -78,22 +78,24 @@ class TodoDetailView extends BaseView<TodoDetailVM> with Validators {
         context: context,
         title: i18n.detail,
       ).defaultAppbar,
-      body: Stack(
-        children: [
-          _content(context),
-          Obx(
-            () => controller.pageState.value == PageState.LOADING
-                ? loading()
-                : Container(),
-          ),
-        ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            _content(context),
+            Obx(
+              () => controller.pageState.value == PageState.LOADING
+                  ? loading()
+                  : Container(),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _content(BuildContext context) {
-    return baseContent(
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: baseContent(
         child: Form(
           key: _formKey,
           child: Column(
@@ -125,9 +127,9 @@ class TodoDetailView extends BaseView<TodoDetailVM> with Validators {
                 },
               ),
               VSpacings.small,
-              _imageContent(context),
-              VSpacings.small,
               _statusContent(context),
+              VSpacings.small,
+              _imageContent(context),
               VSpacings.small,
               AppTextFormField(
                 _descriptionController,

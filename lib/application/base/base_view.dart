@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:getx_mvvm_boilerplate/application/base/base_controller.dart';
 import 'package:getx_mvvm_boilerplate/application/life_cycle_linstener.dart';
 import 'package:getx_mvvm_boilerplate/commons/constants/ui_constant.dart';
+import 'package:getx_mvvm_boilerplate/ui/_theme/app_theme.dart';
 
 abstract class BaseView<Controller extends BaseController>
     extends GetView<Controller> implements LifeCycleListener {
@@ -57,7 +58,11 @@ abstract class BaseView<Controller extends BaseController>
   }
 
   Widget loading() {
-    return Container();
+    return Center(
+      child: CircularProgressIndicator(
+        color: ThemeData().primary(),
+      ),
+    );
   }
 }
 
