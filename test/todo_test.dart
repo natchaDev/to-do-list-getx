@@ -13,7 +13,7 @@ import 'package:path_provider_platform_interface/path_provider_platform_interfac
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  PathProviderPlatform.instance = FakePathProviderPlatform();
+  PathProviderPlatform.instance = MockPathProviderPlatform();
   EnvironmentConfig environmentConfig = DevLocalEnvironment();
   InitialBinding(environmentConfig).dependencies();
   TodoRepository todoRepository = Get.find<TodoRepository>();
@@ -33,6 +33,7 @@ void main() {
       '1',
       'item 1',
       DateTime.now().toUtc(),
+      DateTime.now().toUtc(),
       StatusType.inProgress,
       'description 1',
       null,
@@ -42,6 +43,7 @@ void main() {
       '2',
       'item 2',
       DateTime.now().add(const Duration(hours: 1)).toUtc(),
+      DateTime.now().add(const Duration(hours: 1)).toUtc(),
       StatusType.complete,
       'description 2',
       null,
@@ -50,6 +52,7 @@ void main() {
         todoDetail: TodoDetail(
       '3',
       'item 3',
+      DateTime.now().add(const Duration(hours: 1)).toUtc(),
       DateTime.now().add(const Duration(hours: 1)).toUtc(),
       StatusType.inProgress,
       'description 3',
@@ -75,7 +78,7 @@ void main() {
     });
   });
 
-  group("Home View model", () {
+  group('Home View model', () {
     HomeVM homeVM = Get.put<HomeVM>(HomeVM());
 
     setUp(() {
@@ -87,6 +90,7 @@ void main() {
         '1',
         'item 1',
         DateTime.now().toUtc(),
+        DateTime.now().toUtc(),
         StatusType.inProgress,
         'description 1',
         null,
@@ -95,6 +99,7 @@ void main() {
         '2',
         'item 2',
         DateTime.now().add(const Duration(hours: 1)).toUtc(),
+        DateTime.now().add(const Duration(hours: 1)).toUtc(),
         StatusType.complete,
         'description 2',
         null,
@@ -102,6 +107,7 @@ void main() {
       TodoDetail(
         '3',
         'item 3',
+        DateTime.now().add(const Duration(hours: 1)).toUtc(),
         DateTime.now().add(const Duration(hours: 1)).toUtc(),
         StatusType.inProgress,
         'description 3',
@@ -164,7 +170,7 @@ void main() {
         expect(expectResults, results);
       });
 
-      test('Sort by status', () {
+      test('Undo sort', () {
         List<String> expectResults = [
           '1',
           '2',

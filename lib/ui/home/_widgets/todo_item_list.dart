@@ -11,15 +11,19 @@ import 'package:getx_mvvm_boilerplate/ui/_widgets/app_card.dart';
 import '../../../assets/i18n/i18n_constant.dart';
 
 class TodoItemList extends StatelessWidget {
+  final String? id;
   final String? title;
   final String? status;
+  final DateTime? date;
   final DateTime? createdAt;
   final String? imageBase64;
   final String? description;
 
   TodoItemList({
+    this.id,
     this.title,
     this.status,
+    this.date,
     this.createdAt,
     this.imageBase64,
     this.description,
@@ -32,6 +36,7 @@ class TodoItemList extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          _textContent(context: context, title: i18n.id, content: id),
           _textContent(context: context, title: i18n.title, content: title),
           _textContent(
             context: context,
@@ -45,9 +50,16 @@ class TodoItemList extends StatelessWidget {
           ),
           _textContent(
             context: context,
+            title: i18n.date,
+            content: date != null
+                ? date!.toLocal().toDateTimeString(DateTimeFormat.dmy)
+                : '-',
+          ),
+          _textContent(
+            context: context,
             title: i18n.createdAt,
             content: createdAt != null
-                ? createdAt!.toDateTimeString(DateTimeFormat.dmyHM)
+                ? createdAt!.toLocal().toDateTimeString(DateTimeFormat.dmyHM)
                 : '-',
           ),
           _imageContent(context, imageBase64),

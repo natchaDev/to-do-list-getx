@@ -27,6 +27,7 @@ class AppTextFormField extends StatelessWidget with Validators {
       children: [
         _titleContent(context),
         TextFormField(
+          key: const Key('app_text_form_field'),
           controller: controller,
           maxLines: maxLine,
           autovalidateMode: AutovalidateMode.onUserInteraction,

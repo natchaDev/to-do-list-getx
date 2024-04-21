@@ -44,12 +44,17 @@ class TodoDetailVM extends BaseController {
     todoDetail.value?.status = status;
   }
 
-  onSave({required String title, String? description}) {
+  onSave({
+    required String title,
+    required DateTime dateTime,
+    String? description,
+  }) {
     if (todoDetail.value == null) return;
     TodoDetail data = TodoDetail(
       todoDetail.value!.id,
       title,
       DateTime.now().toUtc(),
+      dateTime,
       todoDetail.value!.status,
       description,
       todoDetail.value!.image,

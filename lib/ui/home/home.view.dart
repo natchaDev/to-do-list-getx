@@ -85,9 +85,11 @@ class HomeView extends BaseView<HomeVM> {
               child: Padding(
                 padding: EdgeInsets.all(Dimen.xxSmall),
                 child: TodoItemList(
+                  id: item.id,
                   title: item.title,
                   status: item.status,
-                  createdAt: item.date,
+                  date: item.date,
+                  createdAt: item.createdAt,
                   imageBase64: item.image,
                   description: item.description,
                 ),

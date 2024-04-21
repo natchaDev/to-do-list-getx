@@ -11,6 +11,9 @@ class TodoDetail {
   @JsonKey(name: JsonKeyConst.title)
   String title;
 
+  @JsonKey(name: JsonKeyConst.createAt)
+  DateTime createdAt;
+
   @JsonKey(name: JsonKeyConst.date)
   DateTime date;
 
@@ -26,6 +29,7 @@ class TodoDetail {
   TodoDetail(
     this.id,
     this.title,
+    this.createdAt,
     this.date,
     this.status,
     this.description,
@@ -34,7 +38,7 @@ class TodoDetail {
 
   @override
   String toString() {
-    return 'TodoDetail{id: $id, title: $title, date: $date, status: $status, description: $description, image: $image}';
+    return 'TodoDetail{id: $id, title: $title, createdAt: $createdAt, date: $date, status: $status, description: $description, image: $image}';
   }
 
   factory TodoDetail.fromJson(Map<String, dynamic> json) =>

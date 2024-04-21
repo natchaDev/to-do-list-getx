@@ -29,6 +29,7 @@ class StatusType {
 
 class DateTimeFormat {
   static const dmyHM = 'd/MM/y H:mm';
+  static const dmy = 'dd/MM/yyyy';
 }
 
 class SortType {

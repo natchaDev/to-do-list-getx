@@ -12,7 +12,7 @@ const String kApplicationDocumentsPath = 'applicationDocumentsPath';
 const String kExternalCachePath = 'externalCachePath';
 const String kExternalStoragePath = 'externalStoragePath';
 
-class FakePathProviderPlatform extends Fake
+class MockPathProviderPlatform extends Fake
     with MockPlatformInterfaceMixin
     implements PathProviderPlatform {
   @override

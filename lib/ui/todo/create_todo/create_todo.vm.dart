@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:get/get.dart';
@@ -12,26 +11,32 @@ import 'package:getx_mvvm_boilerplate/models/todo_detail.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateTodoVM extends BaseController {
+  final Rx<String> selectedStatus = StatusType.inProgress.obs;
   final Rx<File?> image = RxNullable<File?>().setNull();
   final RxList<TodoDetail> todoDetailList = <TodoDetail>[].obs;
   final FileHelper _fileHelper = Get.find<FileHelper>();
   final TodoRepository _todoRepository = Get.find<TodoRepository>();
 
-  @override
-  void onInit() async {
-    super.onInit();
-  }
-
   onTakePhoto(File file) {
     image.value = file;
   }
 
-  onSave({required String title, String? description}) {
+  onSelectedStatus(String? status) {
+    if (status == null) return;
+    selectedStatus.value = status;
+  }
+
+  onSave({
+    required String title,
+    required DateTime date,
+    String? description,
+  }) {
     TodoDetail data = TodoDetail(
       const Uuid().v4(),
       title,
       DateTime.now().toUtc(),
-      StatusType.inProgress,
+      date.toUtc(),
+      selectedStatus.value,
       description,
       _fileHelper.getImageBase64(image.value),
     );

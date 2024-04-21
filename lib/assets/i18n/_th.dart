@@ -16,4 +16,10 @@ final Map<String, String> th = {
   '_detail': 'รายละเอียด',
   '_default': 'ค่าเริ่มต้น',
   '_search': 'ค้นหา',
+  '_please_select': 'กรุณาเลือก',
+  '_please_enter_title': 'กรุณากรอกชื่อ',
+  '_please_select_date': 'กรุณาเลือกวันที่',
+  '_please_enter_a_maximum_of_100_characters': 'กรุณากรอกไม่เกิน 100 ตัวอักษร',
+  '_date': 'วันที่',
+  '_id': 'รหัส',
 };

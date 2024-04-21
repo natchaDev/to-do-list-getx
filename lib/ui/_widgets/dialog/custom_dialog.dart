@@ -56,4 +56,33 @@ extension CustomDialog on BuildContext {
       ),
     );
   }
+
+  Future<DateTime?> datePickerDialog() async {
+    return await showDatePicker(
+      context: this,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2021),
+      lastDate: DateTime(5000),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            datePickerTheme: const DatePickerThemeData(
+              surfaceTintColor: Colors.transparent,
+            ),
+            colorScheme: ColorScheme.light(
+              primary: ThemeData().primary(),
+              onPrimary: ThemeData().accent(),
+              onSurface: ThemeData().primary(),
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: ThemeData().primary(),
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+  }
 }

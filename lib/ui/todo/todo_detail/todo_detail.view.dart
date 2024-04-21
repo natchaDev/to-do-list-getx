@@ -8,11 +8,13 @@ import 'package:getx_mvvm_boilerplate/commons/constants/constant.dart';
 import 'package:getx_mvvm_boilerplate/commons/constants/ui_constant.dart';
 import 'package:getx_mvvm_boilerplate/commons/enum.dart';
 import 'package:getx_mvvm_boilerplate/commons/helpers/file_helper.dart';
+import 'package:getx_mvvm_boilerplate/commons/utils/date_utils.dart';
 import 'package:getx_mvvm_boilerplate/commons/validator.dart';
 import 'package:getx_mvvm_boilerplate/models/todo_detail.dart';
 import 'package:getx_mvvm_boilerplate/ui/_style/text_styles.dart';
 import 'package:getx_mvvm_boilerplate/ui/_theme/app_theme.dart';
 import 'package:getx_mvvm_boilerplate/ui/_widgets/button/button.dart';
+import 'package:getx_mvvm_boilerplate/ui/_widgets/date_picker_content.dart';
 import 'package:getx_mvvm_boilerplate/ui/_widgets/dialog/custom_dialog.dart';
 import 'package:getx_mvvm_boilerplate/ui/_widgets/text_field/app_text_form_field.dart';
 import 'package:getx_mvvm_boilerplate/ui/_widgets/main_app_bar.dart';
@@ -23,8 +25,10 @@ import '../../../assets/i18n/i18n_constant.dart';
 class TodoDetailView extends BaseView<TodoDetailVM> with Validators {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
   final FileHelper _fileHelper = Get.find<FileHelper>();
   final _formKey = GlobalKey<FormState>();
+  DateTime? _date;
 
   @override
   void onInit() {
@@ -36,6 +40,7 @@ class TodoDetailView extends BaseView<TodoDetailVM> with Validators {
     controller.todoDetail.listen((TodoDetail? todoDetail) {
       _titleController.text = todoDetail?.title ?? '';
       _descriptionController.text = todoDetail?.description ?? '';
+      _setDate(todoDetail?.date.toLocal());
     });
 
     controller.message.listen((String message) {
@@ -46,6 +51,17 @@ class TodoDetailView extends BaseView<TodoDetailVM> with Validators {
         },
       );
     });
+  }
+
+  _setDate(DateTime? dateTime) {
+    if (dateTime == null) return;
+    _dateController.text = dateTime.toDateTimeString(DateTimeFormat.dmy) ?? '';
+    _date = dateTime;
+  }
+
+  _showDatePickerDialog() async {
+    DateTime? pickedDate = await context!.datePickerDialog();
+    _setDate(pickedDate);
   }
 
   _takePhoto() async {
@@ -90,12 +106,23 @@ class TodoDetailView extends BaseView<TodoDetailVM> with Validators {
                 isRequired: true,
                 maxLine: 1,
                 validatorList: [
-                  Validators.required('Please enter title.'),
+                  Validators.required(i18n.pleaseEnterTitle.tr),
                   Validators.maxLength(
                     100,
-                    'Please enter a maximum of 100 characters.',
+                    i18n.pleaseEnterTitle.tr,
                   ),
                 ],
+              ),
+              VSpacings.small,
+              DatePickerContent(
+                title: i18n.date,
+                controller: _dateController,
+                validatorList: [
+                  Validators.required(i18n.pleaseSelectDate.tr),
+                ],
+                onTap: () {
+                  _showDatePickerDialog();
+                },
               ),
               VSpacings.small,
               _imageContent(context),
@@ -195,6 +222,7 @@ class TodoDetailView extends BaseView<TodoDetailVM> with Validators {
         if (_formKey.currentState!.validate()) {
           controller.onSave(
             title: _titleController.text,
+            dateTime: _date!,
             description: _descriptionController.text,
           );
         }
