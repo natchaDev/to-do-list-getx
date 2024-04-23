@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:getx_mvvm_boilerplate/application/base/base_controller.dart';
 import 'package:getx_mvvm_boilerplate/commons/constants/constant.dart';
 import 'package:getx_mvvm_boilerplate/commons/constants/get_argument_constant.dart';
+import 'package:getx_mvvm_boilerplate/commons/constants/table_constant.dart';
 import 'package:getx_mvvm_boilerplate/commons/enum.dart';
 import 'package:getx_mvvm_boilerplate/data/local_db/repositories/todo_repository.dart';
 import 'package:getx_mvvm_boilerplate/models/todo_detail.dart';
@@ -124,5 +125,15 @@ class HomeVM extends BaseController {
       default:
         return -1;
     }
+  }
+
+  onDeleteTodo(String id) {
+    pageState.value = PageState.LOADING;
+    _todoRepository.deleteByKey(key: id, boxName: BoxName.todo).then((_) {
+      onInit();
+    }).catchError((e) {
+      pageState.value = PageState.DEFAULT;
+      showErrorMessage(e);
+    });
   }
 }
