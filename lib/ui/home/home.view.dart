@@ -79,22 +79,37 @@ class HomeView extends BaseView<HomeVM> {
           itemCount: list.length,
           itemBuilder: (BuildContext context, int index) {
             TodoDetail item = list[index];
-            return InkWell(
-              onTap: () {
-                controller.routeToTodoDetail(item.id);
-              },
-              child: Padding(
-                padding: EdgeInsets.all(Dimen.xxSmall),
-                child: TodoItemList(
-                  id: item.id,
-                  title: item.title,
-                  status: item.status,
-                  date: item.date,
-                  createdAt: item.createdAt,
-                  imageBase64: item.image,
-                  description: item.description,
+            return Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      controller.routeToTodoDetail(item.id);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(Dimen.xxSmall),
+                      child: TodoItemList(
+                        id: item.id,
+                        title: item.title,
+                        status: item.status,
+                        date: item.date,
+                        createdAt: item.createdAt,
+                        imageBase64: item.image,
+                        description: item.description,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                IconButton(
+                  icon: Icon(
+                    Icons.delete,
+                    color: ThemeData().alert(),
+                  ),
+                  onPressed: () {
+                    controller.onDeleteTodo(item.id);
+                  },
+                )
+              ],
             );
           },
         );

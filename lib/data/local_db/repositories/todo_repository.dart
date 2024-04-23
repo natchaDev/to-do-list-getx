@@ -53,7 +53,7 @@ class TodoRepository {
     await box.put(key, json);
   }
 
-  deleteByKey({required String key, required String boxName}) async {
+  Future<void> deleteByKey({required String key, required String boxName}) async {
     var box = await _initBox(boxName);
     await box.delete(key);
   }
