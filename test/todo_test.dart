@@ -136,8 +136,9 @@ void main() {
     });
 
     group('Sort', () {
-      mock.shuffle();
+
       test('Ascending by title', () {
+        homeVM.todoDetailList.shuffle();
         List<String> expectResults = [
           'item 1',
           'item 2',
@@ -149,6 +150,7 @@ void main() {
       });
 
       test('Descending by title', () {
+        homeVM.todoDetailList.shuffle();
         List<String> expectResults = [
           'item 3',
           'item 2',
@@ -160,6 +162,7 @@ void main() {
       });
 
       test('Ascending by date', () {
+        homeVM.todoDetailList.shuffle();
         List<String> expectResults = [
           '1',
           '2',
@@ -171,6 +174,7 @@ void main() {
       });
 
       test('Descending by date', () {
+        homeVM.todoDetailList.shuffle();
         List<String> expectResults = [
           '3',
           '2',
@@ -182,6 +186,7 @@ void main() {
       });
 
       test('Ascending by status', () {
+        homeVM.todoDetailList.shuffle();
         List<String> expectResults = [
           '2',
           '3',
@@ -193,6 +198,7 @@ void main() {
       });
 
       test('Descending by status', () {
+        homeVM.todoDetailList.shuffle();
         List<String> expectResults = [
           '1',
           '3',
@@ -204,6 +210,7 @@ void main() {
       });
 
       test('Undo sort', () {
+        homeVM.todoDetailList.shuffle();
         List<String> expectResults = [
           '1',
           '2',
